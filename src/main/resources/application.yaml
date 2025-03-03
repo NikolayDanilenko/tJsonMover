@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: JsonMover
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/Test
+    username: postgres
+    password: Nartkala36
+
+
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+
+
+
+  jpa:
+    hibernate:
+      ddl-auto: validate

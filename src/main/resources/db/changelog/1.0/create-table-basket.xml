@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="1" author="Niko">
+
+        <createTable tableName="basket">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="beans" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="apples" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="oranges" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="brand" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ratio" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cleaning_fee" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="baking_fee" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="commission_fee" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+        <createTable tableName="basket_descriptors">
+            <column name="basket_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descriptor" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="basket_descriptors"
+                baseColumnNames="basket_id"
+                constraintName="fk_basket_descriptors_basket"
+                referencedTableName="basket"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>
