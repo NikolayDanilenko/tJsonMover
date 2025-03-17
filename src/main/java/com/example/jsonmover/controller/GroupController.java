@@ -2,35 +2,42 @@ package com.example.jsonmover.controller;
 
 
 
-import com.example.jsonmover.entity.Student;
+import com.example.jsonmover.dto.AddGroupRequestDto;
+import com.example.jsonmover.dto.FindAllGroupsDto;
+import com.example.jsonmover.dto.FindByIdGroupRequestDto;
 import com.example.jsonmover.entity.UniversityGroup;
-import com.example.jsonmover.service.GroupProjection;
 import com.example.jsonmover.service.GroupService;
-import com.example.jsonmover.service.StudentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/groups")
 public class GroupController {
 
 
-    @Autowired
-    private GroupService groupService;
+    private final GroupService groupService;
 
 
     @PostMapping
-    public UniversityGroup addUniversityGroup(@RequestBody UniversityGroup universityGroup) {
-        return groupService.addUniversityGroup(universityGroup);
+    public void add(@RequestBody AddGroupRequestDto addGroupRequestDto) {
+        groupService.addGroup(addGroupRequestDto);
+        System.out.println("Создано");
     }
 
-
-    @GetMapping
-    public List<GroupProjection> getAllGroups() {
-        return groupService.getAllGroupsWithStudentCount();
+    @GetMapping("/{groupId}")
+    public FindByIdGroupRequestDto getGroupWithStudents(@PathVariable Integer groupId) {
+        return groupService.getGroupWithStudents(groupId);
     }
 
+    @GetMapping()
+    public List<FindAllGroupsDto> findAllGroupsDto(){
+        return groupService.findAllGroups();
+    }
 }
+
 

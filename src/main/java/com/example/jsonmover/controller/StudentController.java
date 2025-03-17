@@ -1,43 +1,29 @@
 package com.example.jsonmover.controller;
 
+import com.example.jsonmover.dto.AddGroupRequestDto;
+import com.example.jsonmover.dto.AddStudentRequestDto;
+import com.example.jsonmover.dto.AddStudentToGroupDto;
 import com.example.jsonmover.entity.Student;
 import com.example.jsonmover.service.StudentService;
+import com.example.jsonmover.service.StudentServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/students")
 public class StudentController {
 
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
 
-
-    @PostMapping
-    public Student addStudent(@RequestBody Student student) {
-        return studentService.saveStudent(student);
+    @PostMapping()
+    public void addStudent(@RequestBody AddStudentToGroupDto addStudentToGroupDto){
+            studentService.addStudent(addStudentToGroupDto);
+            System.out.println("Создано");
+        }
     }
 
-    @PutMapping("/{studentId}/add/{groupId}")
-    public Student addStudentToGroup(
-            @PathVariable int studentId,
-            @PathVariable int groupId
-    ) {
-        return studentService.updateStudentToGroup(studentId, groupId);
-    }
 
-    @PostMapping("{groupId}")
-    public Student addStudentToGroup(
-            @RequestBody Student student,
-            @PathVariable int groupId
-    ) {
-        return studentService.saveStudentWithGroup(student,groupId);
-    }
-
-    @GetMapping
-    public List<Student> getAllStudent(){
-      return studentService.findAllStudent();
-    }
-}
