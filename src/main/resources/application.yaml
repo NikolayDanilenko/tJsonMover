@@ -13,7 +13,28 @@ spring:
     change-log: classpath:/db/changelog/db.changelog-master.xml
 
 
-
   jpa:
     hibernate:
       ddl-auto: validate
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+
+logging:
+  file:
+    name: logs/application.log
+  level:
+    root: INFO
+    org.springframework: INFO
+    com.example: ERROR
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30
+
+

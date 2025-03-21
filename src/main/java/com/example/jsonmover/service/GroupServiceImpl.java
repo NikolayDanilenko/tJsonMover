@@ -6,8 +6,11 @@ import com.example.jsonmover.dto.FindAllGroupsDto;
 import com.example.jsonmover.dto.FindByIdGroupRequestDto;
 import com.example.jsonmover.entity.Student;
 import com.example.jsonmover.entity.UniversityGroup;
+import com.example.jsonmover.error.NotFoundException;
 import com.example.jsonmover.repository.GroupRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GroupServiceImpl implements GroupService {
 
 
@@ -23,7 +27,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void addGroup(AddGroupRequestDto addGroupRequestDto) {
-
+        log.info("start method addGroup with number {}", addGroupRequestDto);
         String number = addGroupRequestDto.getNumber();
         UniversityGroup universityGroup = new UniversityGroup();
         universityGroup.setName(number);
@@ -35,7 +39,7 @@ public class GroupServiceImpl implements GroupService {
     public FindByIdGroupRequestDto getGroupWithStudents(Integer groupId) {
 
         UniversityGroup group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new RuntimeException("Group not found"));
+                .orElseThrow(() -> new NotFoundException("Group not found " + groupId));
 
 
         return new FindByIdGroupRequestDto(
