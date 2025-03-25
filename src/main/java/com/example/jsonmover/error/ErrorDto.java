@@ -12,6 +12,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 
 public class ErrorDto {
+
+
+
+    
     private int code;
     private String description;
     private LocalDateTime timestamp;
@@ -20,5 +24,7 @@ public class ErrorDto {
         this.code = code;
         this.description = description;
         this.timestamp = LocalDateTime.now();
+
+
     }
 }
